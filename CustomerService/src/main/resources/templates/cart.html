@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<header th:insert="fragments/nav-bar :: nav-bar"></header>
+<p></p>
+<h3 class="container">Корзина</h3>
+<div th:if="${!cart.isEmpty()}">
+    <div class="album py-5 bg-light" th:each="product : ${cart.getAllProducts()}">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-text" th:text="${product.name}">Product name.</h5>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <form method="post" th:action="'cart/' + ${product.id} + '/delete'">
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary">Удалить из корзины</button>
+                                    </form>
+                                    <form method="post" th:action="'cart/' + ${product.id} + '/quantity'">
+                                        <input type="number" min="0" th:value="${cart.getQuantity(product)}" name="quantity">
+                                        <button type="submit" class="btn btn-sm btn-outline-secondary">Установить количество</button>
+                                    </form>
+                                    <small class="text-muted" th:text="${cart.getQuantity(product)}">Quantity</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <a class="btn btn-primary btn-lg btn-block" href="/create-order">Создать заказ</a>
+    </div>
+</div>
+<h3 th:if="${cart.isEmpty()}">Корзина пуста</h3>
+
+</body>
+</html>

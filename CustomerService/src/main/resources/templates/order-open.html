@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Заказ</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<header th:insert="fragments/nav-bar :: nav-bar"></header>
+<p></p>
+<h3 class="container">Заказ № <span th:text="${order.id}">##</span></h3>
+<main role="main" class="container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 themed-grid-col"><h5>Имя заказчика</h5></div>
+            <div class="col-md-2 themed-grid-col"><h5>Email заказчика</h5></div>
+            <div class="col-md-2 themed-grid-col"><h5>Телефон заказчика</h5></div>
+            <div class="col-md-2 themed-grid-col"><h5>Заказ принят</h5></div>
+            <div class="col-md-2 themed-grid-col"><h5>Заказ оплачен</h5></div>
+            <div class="col-md-2 themed-grid-col"><h5>Заказ доставлен</h5></div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 themed-grid-col" th:text="${order.customerName}"></div>
+            <div class="col-md-2 themed-grid-col" th:text="${order.customerEmail}"></div>
+            <div class="col-md-2 themed-grid-col" th:text="${order.customerPhone}"></div>
+            <div class="col-md-2 themed-grid-col"><span th:if="${order.confirmed}">Принят</span><span th:unless="${order.confirmed}">Не принят</span></div>
+            <div class="col-md-2 themed-grid-col"><span th:if="${order.paid}">Оплачен</span> <span th:unless="${order.paid}">Не оплачен</span></div>
+            <div class="col-md-2 themed-grid-col"><span th:if="${order.delivered}">Доставлен</span> <span th:unless="${order.delivered}">Не доставлен</span></div>
+        </div>
+
+        <div class="album py-5 bg-light" th:each="product : ${order.cart.getAllProducts()}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-text" th:text="${product.name}">Product name.</h5>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted" th:text="${order.cart.getQuantity(product)}">Quantity</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container-sm">
+            <div class="col-md-8 order-md-1">
+                <form method="post" class="needs-validation" novalidate="" th:if="${!order.confirmed} and ${!order.paid} and ${!order.delivered}" th:action="${order.id} + '/edit'">
+                    <div class="row">
+                        <div class="col-md-6 mb-3" >
+                            <label for="name">Имя полностью</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="" required="" th:value="${order.customerName}">
+                            <div class="invalid-feedback">
+                                Введите имя
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" th:value="${order.customerEmail}">
+                        <div class="invalid-feedback">
+                            Введите Email
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="phone">Номер телефона</label>
+                            <input type="text" class="form-control" id="phone" name="phone" placeholder="" value="" required="" th:value="${order.customerPhone}">
+                            <div class="invalid-feedback">
+                                Введите номер телефона
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="mb-4">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Редактировать данные</button>
+                </form>
+                <form th:if="${!order.confirmed} and ${!order.paid} and ${!order.delivered}" method="post" th:action="${order.id} + '/confirm'">
+                    <button type="submit">Подтвердить заказ</button>
+                </form>
+                <form th:if="${!order.confirmed} and ${!order.paid} and ${!order.delivered}" method="post" th:action="${order.id} + '/delete'">
+                    <button type="submit">Удалить заказ</button>
+                </form>
+                <form th:if="${order.confirmed} and ${!order.paid} and ${!order.delivered}" method="post" th:action="${order.id} + '/pay'">
+                    <button type="submit">Оплатить заказ</button>
+                </form>
+                <form th:if="${order.confirmed} and ${order.paid} and ${!order.delivered}" method="post" th:action="${order.id} + '/delivery'">
+                    <button type="submit">Отправить заказ</button>
+                </form>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Создать заказ</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<header th:insert="fragments/nav-bar :: nav-bar"></header>
+<p></p>
+<h3 class="container">Введите данные</h3>
+<main role="main" class="container">
+    <div class="container-sm">
+        <div class="col-md-8 order-md-1">
+            <h4 class="mb-3">Введите данные</h4>
+            <form method="post" class="needs-validation" novalidate="">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="name">Имя полностью</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="" value="" required>
+                        <div class="invalid-feedback">
+                            Введите имя
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
+                    <div class="invalid-feedback">
+                        Введите Email
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="phone">Номер телефона</label>
+                        <input type="text" class="form-control" id="phone" name="phone" placeholder="" value="" required>
+                        <div class="invalid-feedback">
+                            Введите номер телефона
+                        </div>
+                    </div>
+                </div>
+                <hr class="mb-4">
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Создать заказ</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
