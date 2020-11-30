@@ -10,7 +10,7 @@
 <header th:insert="fragments/nav-bar :: nav-bar"></header>
 <p></p>
 <h3 class="container">Заказ № <span th:text="${order.id}">##</span></h3>
-<main role="main" class="container">
+<main role="main" class="container" th:if="${authInfo.jwtToken != null}">
     <div class="container">
         <div class="row">
             <div class="col-md-2 themed-grid-col"><h5>Имя заказчика</h5></div>
@@ -49,7 +49,7 @@
 
         <div class="container-sm">
             <div class="col-md-8 order-md-1">
-                <form method="post" class="needs-validation" novalidate="" th:if="${!order.confirmed} and ${!order.paid} and ${!order.delivered}" th:action="${order.id} + '/edit'">
+                <form method="post" th:if="${!order.confirmed} and ${!order.paid} and ${!order.delivered}" th:action="${order.id} + '/edit'">
                     <div class="row">
                         <div class="col-md-6 mb-3" >
                             <label for="name">Имя полностью</label>

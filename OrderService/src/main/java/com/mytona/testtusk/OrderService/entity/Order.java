@@ -1,5 +1,6 @@
 package com.mytona.testtusk.OrderService.entity;
 
+import com.mytona.testtusk.OrderService.entity.users.Account;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,10 @@ public class Order {
     private boolean paid;
 
     private boolean delivered;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="account_id")
+    private Account account;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<OrderProduct> orderProducts;

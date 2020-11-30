@@ -17,7 +17,7 @@
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
                         <h5 class="card-text" th:text="${product.name}">Product name.</h5>
-                        <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center" th:if="${authInfo.jwtToken != null}">
                             <div class="btn-group">
                                 <form method="post" th:action="'products/' + ${product.id} + '/add'">
                                     <button type="submit" class="btn btn-sm btn-outline-secondary">Добавить в корзину</button>

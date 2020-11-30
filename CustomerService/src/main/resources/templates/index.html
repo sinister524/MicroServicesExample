@@ -9,9 +9,12 @@
 <body>
 <header th:insert="fragments/nav-bar :: nav-bar"></header>
 <main role="main" class="container">
-    <h2><a href="/orders">Заказы</a></h2>
+    <h2 th:if="${authInfo.jwtToken != null}"><a href="/orders">Заказы</a></h2>
     <h2><a href="/products">Товары</a></h2>
-    <h2><a href="/cart">Корзина</a></h2>
+
+    <h2 th:if="${authInfo.jwtToken != null}"><a href="/cart">Корзина</a></h2>
+    <h2 th:if="${authInfo.jwtToken == null}">Чтобы создавать или просматривать заказы <a href="/auth">войдите</a> или <a href="/registration">зарегисрируйтесь</a></h2>
+    <h2 th:if="${authInfo.jwtToken != null}"><a href="/logout">Выйти</a></h2>
 </main>
 </body>
 </html>

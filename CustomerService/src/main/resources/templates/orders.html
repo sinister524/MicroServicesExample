@@ -10,7 +10,7 @@
 <header th:insert="fragments/nav-bar :: nav-bar"></header>
 <p></p>
 <h3 class="container">Заказы</h3>
-<main role="main" class="container">
+<main role="main" class="container" th:if="${authInfo.jwtToken != null}">
     <div class="container">
         <div class="row">
             <div class="col-md-2 themed-grid-col"><h5>Имя заказчика</h5></div>
